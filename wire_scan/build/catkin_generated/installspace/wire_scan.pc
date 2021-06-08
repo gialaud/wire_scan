@@ -1,8 +1,0 @@
-prefix=/usr/local
-
-Name: wire_scan
-Description: Description of wire_scan
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
