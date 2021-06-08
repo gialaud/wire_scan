@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/acirillo/catkin_ws/src/wire_scan/wire_scan/build/devel/setup.sh
