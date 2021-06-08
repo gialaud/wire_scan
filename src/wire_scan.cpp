@@ -62,22 +62,22 @@ int main(int argc, char* argv[])
   bool scan_x = true;  /* Scanning direction: if 1 scan along x, if 0 scan along y w.r.t. the base frame */
   char dataConfirmation = 0;
   
-  /* Text file for Data Storage*/
-  ofstream map_file;
-  ofstream pointCloud_file;
-  
-  time_t t = time(0);   // get time now
+  /* Get time now for file names */
+  time_t t = time(0);   
   struct tm * now = localtime( & t );
 
+  /* File names */
+  string name_map_file = "map_";
+  string name_mapVertex_file = "mapVertex_";
+  string name_pointCloud_file = "pointCloudData_";
   char buffer_name_time[80];
-  char buffer_name_map_file[30] = "map_";
-  char buffer_name_pointCloud_file[30] = "pointCloudData_";
   strftime (buffer_name_time,80,"%Y-%m-%d_%H-%M-%S",now);
+  string name_time(buffer_name_time);
   
-  strcat(buffer_name_map_file, buffer_name_time);
-  strcat(buffer_name_map_file, ".txt");
-  strcat(buffer_name_pointCloud_file, buffer_name_time);
-  strcat(buffer_name_pointCloud_file, ".txt");
+  /* Open Text files for Data Storage */
+  ofstream map_file (name_map_file + name_time +".txt");
+  ofstream mapVertex_file (name_mapVertex_file + name_time +".txt");
+  ofstream pointCloud_file (name_pointCloud_file + name_time +".txt");
   
   /* App Initialization */
   if (argc < 6U)
@@ -143,9 +143,6 @@ int main(int argc, char* argv[])
   float next_point_x = 0, next_point_y = 0, point_distance = 0;
   bool next_vertex = false;
   
-  /* Open map file */
-  map_file.open (buffer_name_map_file);
-  
   /* Add Current point - 1st point */
   map_x.push_back(0.0);
   map_y.push_back(0.0);
@@ -153,6 +150,7 @@ int main(int argc, char* argv[])
   
   /* Save first point into the file */
   map_file << map_x.at(0) << " " << map_y.at(0) << " " << map_time.at(0) << endl;
+  mapVertex_file << map_x.at(0) << " " << map_y.at(0) << endl;
   
   /* Compute numRow and numColumn */
   if(scan_x == true)
@@ -191,6 +189,8 @@ int main(int argc, char* argv[])
             map_y.push_back(next_point_y);
             
             next_vertex = true;
+            
+            mapVertex_file << next_point_x << " " << next_point_y << endl;
           }
           
           /* Compute point final time */
@@ -224,6 +224,8 @@ int main(int argc, char* argv[])
             map_y.push_back(next_point_y);
             
             next_vertex = true;
+            
+            mapVertex_file << next_point_x << " " << next_point_y << endl;
           }
           
           /* Compute point final time */
@@ -257,6 +259,8 @@ int main(int argc, char* argv[])
             map_y.push_back(next_point_y);
             
             next_vertex = true;
+            
+            mapVertex_file << next_point_x << " " << next_point_y << endl;
           }
           
           /* Compute point final time */
@@ -290,6 +294,8 @@ int main(int argc, char* argv[])
             map_y.push_back(next_point_y);
             
             next_vertex = true;
+            
+            mapVertex_file << next_point_x << " " << next_point_y << endl;
           }
           
           /* Compute point final time */
@@ -330,6 +336,8 @@ int main(int argc, char* argv[])
             map_y.push_back(next_point_y);
             
             next_vertex = true;
+            
+            mapVertex_file << next_point_x << " " << next_point_y << endl;
           }
           
           /* Compute point final time */
@@ -363,6 +371,8 @@ int main(int argc, char* argv[])
             map_y.push_back(next_point_y);
             
             next_vertex = true;
+            
+            mapVertex_file << next_point_x << " " << next_point_y << endl;
           }
           
           /* Compute point final time */
@@ -396,6 +406,8 @@ int main(int argc, char* argv[])
             map_y.push_back(next_point_y);
             
             next_vertex = true;
+            
+            mapVertex_file << next_point_x << " " << next_point_y << endl;
           }
           
           /* Compute point final time */
@@ -429,6 +441,8 @@ int main(int argc, char* argv[])
             map_y.push_back(next_point_y);
             
             next_vertex = true;
+            
+            mapVertex_file << next_point_x << " " << next_point_y << endl;
           }
           
           /* Compute point final time */
@@ -448,9 +462,7 @@ int main(int argc, char* argv[])
   
   /* Close the map file */
   map_file.close();
-  
-  /* Open the point cloud file */
-  pointCloud_file.open (buffer_name_pointCloud_file);
+  mapVertex_file.close();
   
   /* ROS Initialization */
   string nodeName = "WireScan";
