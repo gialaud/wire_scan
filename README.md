@@ -1,4 +1,4 @@
-** wire_scan node interface **
+**wire_scan node interface**
 Following the step to configure and launch the node:
 1) Fill the define in wire_scan.h "PROXIMITY_SENSOR_TOPIC" with the name of the Proximity Sensor Topic
 2) Launch the node by executing the following command in the terminal:
