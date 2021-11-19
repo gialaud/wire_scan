@@ -21,7 +21,7 @@ UnitQuaternion oldQ;
 Vector<3> xdd, xd, x, x0, w; // Desired Values
 Vector<3> xe; // Current ee position
 Vector<3> xe_first; // Initial ee position
-double hz = 100; /* Hz */
+double hz = 50.0; /* Hz */
 
 UR5e UR5e_robot; /* Robot obj */
 
@@ -67,17 +67,23 @@ int main(int argc, char* argv[])
   struct tm * now = localtime( & t );
 
   /* File names */
+  string path = "/home/ur5e/Scrivania/scan_proximity/demo_maps/";
   string name_map_file = "map_";
   string name_mapVertex_file = "mapVertex_";
   string name_pointCloud_file = "pointCloudData_";
   char buffer_name_time[80];
   strftime (buffer_name_time,80,"%Y-%m-%d_%H-%M-%S",now);
   string name_time(buffer_name_time);
-  
-  /* Open Text files for Data Storage */
-  ofstream map_file (name_map_file + name_time +".txt");
-  ofstream mapVertex_file (name_mapVertex_file + name_time +".txt");
-  ofstream pointCloud_file (name_pointCloud_file + name_time +".txt");
+
+  // /* Open Text files for Data Storage */
+  // ofstream map_file (name_map_file + name_time +".txt");
+  // ofstream mapVertex_file (name_mapVertex_file + name_time +".txt");
+  // ofstream pointCloud_file (name_pointCloud_file + name_time +".txt");
+
+  /* Open Text files for Data Storage (MODIFIED for saving in a specific folder)*/
+  ofstream map_file (path + name_map_file + "demo.txt");
+  ofstream mapVertex_file (path + name_mapVertex_file + "demo.txt");
+  ofstream pointCloud_file (path + name_pointCloud_file + "demo.txt");
   
   /* App Initialization */
   if (argc < 6U)
@@ -596,7 +602,6 @@ int main(int argc, char* argv[])
     /* Store and send new PointCloud sample */
     if( proximity_new_data_available )
     {
-      cout << xe[2] << endl;
       point_msg.x = xe[0];
       point_msg.y = xe[1];
       point_msg.z = xe[2] - proximity_data/1000.0;
